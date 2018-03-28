@@ -50,7 +50,7 @@ export default class App extends React.Component {
       cache: new InMemoryCache(),
     });
   }
-  
+
   _handlePressAsync = async () => {
     let redirectUrl = AuthSession.getRedirectUrl();
     let result = await AuthSession.startAsync({
@@ -74,8 +74,6 @@ export default class App extends React.Component {
       },
     }).then(response => response.json());
     let access = await accessCall();
-    console.log(access);
-    //await AsyncStorage.setItem('token', access.access_token);
     this.setState({ result:access });
   };
 }
