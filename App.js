@@ -50,11 +50,6 @@ export default class App extends React.Component {
       cache: new InMemoryCache(),
     });
   }
-  _getToken = accessToken => {
-    const token = `bearer ${accessToken}`
-    console.log('call github with this', token);
-    return token;
-  }
   
   _handlePressAsync = async () => {
     let redirectUrl = AuthSession.getRedirectUrl();
