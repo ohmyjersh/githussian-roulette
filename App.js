@@ -2,12 +2,15 @@ import React from 'react';
 import {AuthSession} from 'expo';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-boost';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import Main from './Main';
 
-const GH_URL = 'https://github.com/login/oauth/authorize?scope=user:email'
 const CLIENT_ID = ''
 const CLIENT_SECRET = ''
+const GH_URL = 'https://github.com/login/oauth/authorize?'
 
 
 export default class App extends React.Component {
@@ -19,20 +22,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         {!this.state.result ? <Button class="" title="Login with GitHub" onPress={this._handlePressAsync} /> : null }
         {this.state.result ? (
-          <ApolloProvider client={new ApolloClient({
-            uri: 'https://api.github.com/graphql',
-            fetchOptions: {
-              credentials: 'include', 
-              request: (operation) => {
-                //const token = await AsyncStorage.getItem('token');
-                operation.setContext({
-                  headers: {
-                    Authorization: `bearer ${this.state.result.access_token}`
-                  }
-                });
-              },
-            }
-          })}>
+          <ApolloProvider client={this._createApolloClient(this.state.result.access_token)} > 
           <Main />
         </ApolloProvider>
         ) : null}
@@ -40,6 +30,26 @@ export default class App extends React.Component {
     );
   }
  
+
+  _createApolloClient = (token) => {
+    const httpLink = createHttpLink({
+      uri: 'https://api.github.com/graphql',
+    });
+    
+    const authLink = setContext((_, { headers }) => {
+      return {
+        headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : '',
+        },
+      };
+    });
+    
+    return new ApolloClient({
+      link: authLink.concat(httpLink),
+      cache: new InMemoryCache(),
+    });
+  }
   _getToken = accessToken => {
     const token = `bearer ${accessToken}`
     console.log('call github with this', token);
