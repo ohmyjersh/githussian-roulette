@@ -22,10 +22,15 @@ export default class App extends React.Component {
           <ApolloProvider client={new ApolloClient({
             uri: 'https://api.github.com/graphql',
             fetchOptions: {
-              credentials: 'include',
-              headers: {
-                authorization: `Bearer ${this.state.result.params.code}`,
-              }
+              credentials: 'include', 
+              request: (operation) => {
+                //const token = await AsyncStorage.getItem('token');
+                operation.setContext({
+                  headers: {
+                    Authorization: `bearer ${this.state.result.access_token}`
+                  }
+                });
+              },
             }
           })}>
           <Main />
@@ -34,6 +39,13 @@ export default class App extends React.Component {
         </View>
     );
   }
+ 
+  _getToken = accessToken => {
+    const token = `bearer ${accessToken}`
+    console.log('call github with this', token);
+    return token;
+  }
+  
   _handlePressAsync = async () => {
     let redirectUrl = AuthSession.getRedirectUrl();
     let result = await AuthSession.startAsync({
@@ -43,8 +55,23 @@ export default class App extends React.Component {
         `&redirect_uri=${encodeURIComponent(redirectUrl)}` +
         `&scope=${encodeURIComponent(`user public_repo repo repo_deployment repo:status read:repo_hook read:org read:public_key read:gpg_key`)}`
     });
-    console.log(result.params.code);
-    this.setState({ result });
+    let code = result.params.code;
+    console.log(code);
+
+    let accessCall = async () => await fetch('https://github.com/login/oauth/access_token' +
+    `?client_id=${CLIENT_ID}` +
+    `&client_secret=${CLIENT_SECRET}` +
+    `&code=${code}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(response => response.json());
+    let access = await accessCall();
+    console.log(access);
+    //await AsyncStorage.setItem('token', access.access_token);
+    this.setState({ result:access });
   };
 }
 
