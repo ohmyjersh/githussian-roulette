@@ -3,22 +3,22 @@ import React from 'react';
 
 import Search from './Search';
 import Labels from './Labels';
-import Main from './Main';
+import Login from './Login';
 
 const RootStack = StackNavigator(
     {
+      Login: {
+        screen: Login,
+      },
       Search: {
         screen: Search,
       },
       Labels: {
         screen: Labels,
-      },
-      Main: {
-        screen: Main,
-      },
+      }
     },
     {
-      initialRouteName: 'Main',
+      initialRouteName: 'Login',
       navigationOptions: {
         headerStyle: {
           backgroundColor: '#f4511e',
