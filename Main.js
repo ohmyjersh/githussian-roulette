@@ -7,7 +7,7 @@ export default class Main extends React.Component {
   render() {
     return (
       <View>
-        <Labels />
+        <Text>asdfdsafasfd</Text>
     </View>
     );
   }

@@ -3,6 +3,7 @@ import React from 'react';
 
 import Search from './Search';
 import Labels from './Labels';
+import Main from './Main';
 
 const RootStack = StackNavigator(
     {
@@ -12,9 +13,12 @@ const RootStack = StackNavigator(
       Labels: {
         screen: Labels,
       },
+      Main: {
+        screen: Main,
+      },
     },
     {
-      initialRouteName: 'Search',
+      initialRouteName: 'Main',
       navigationOptions: {
         headerStyle: {
           backgroundColor: '#f4511e',
@@ -27,5 +31,9 @@ const RootStack = StackNavigator(
     }
   );
 
-  export default RootStack;
+export default class Root extends React.Component {
+    render() {
+      return <RootStack />;
+    }
+  }
   
