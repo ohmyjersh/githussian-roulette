@@ -12,6 +12,10 @@ const RootStack = StackNavigator(
       },
       Search: {
         screen: Search,
+        navigationOptions:  {
+          title: 'Search',
+          headerLeft: null
+      }
       },
       Labels: {
         screen: Labels,

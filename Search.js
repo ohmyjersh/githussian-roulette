@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image} from 'react-native';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 
@@ -31,11 +31,39 @@ query queryIssue {
 }
 `;
 
+class LogoTitle extends React.Component {
+    render() {
+      return (
+        <Image
+          style={{ width: 30, height: 30 }}
+        />
+      );
+    }
+  }
+
 export default class Search extends React.Component {
+    static navigationOptions = {
+        headerTitle: <LogoTitle />,
+        headerRight: (
+          <Button
+            onPress={() => alert('This is a button!')}
+            title="Filters"
+            color="#fff"
+          />
+        ),
+        headerLeft: (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Favorites"
+              color="#fff"
+            />
+          ),
+      };
   render() {
     return (
       <View>
-      <Query query={HelloWorld}>
+          <Text>this is the search things</Text>
+      {/* <Query query={HelloWorld}>
       {({ loading, error, data }) => {
         if (loading) return <Text>Loading...</Text>;
         if (error) return  <Text> error </Text>; 
@@ -44,7 +72,7 @@ export default class Search extends React.Component {
           <Text>{JSON.stringify(data)}</Text>
         )}
       }}
-    </Query>
+    </Query> */}
     </View>
     );
   }

@@ -10,7 +10,8 @@ const GH_URL = 'https://github.com/login/oauth/authorize?'
 
 export default class App extends React.Component {
     state = {
-        result: null
+        result: null,
+        error: false
     }
     static navigationOptions = ({ navigation, navigationOptions }) => {
         const { params } = navigation.state;
@@ -37,8 +38,8 @@ export default class App extends React.Component {
                 type='github'
                 onPress={this._handlePressAsync}
               /> : null}
-            {this.state.result ? (
-                <Text>hi</Text>
+            {this.state.error ? (
+                <Text>Something happened, please try again...</Text>
             ) : null}
         </View>)
     }
@@ -65,9 +66,14 @@ export default class App extends React.Component {
                     'Content-Type': 'application/json',
                 },
             }).then(response => response.json());
-        let access = await accessCall();
-        await AsyncStorage.setItem('access_token', access.access_token);
-        this.props.navigation.navigate('Search');
+            try {
+                let access = await accessCall();
+                await AsyncStorage.setItem('access_token', access.access_token);
+                this.props.navigation.navigate('Search');
+            }
+            catch(e) {
+                this.setState({error:true})
+            }
     }
 }
 
