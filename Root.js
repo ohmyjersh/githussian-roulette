@@ -14,7 +14,6 @@ const RootStack = StackNavigator(
         screen: Search,
         navigationOptions:  {
           title: 'Search',
-          headerLeft: null
       }
       },
       Labels: {

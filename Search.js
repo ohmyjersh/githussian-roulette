@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image} from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { Button } from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 
@@ -33,37 +35,43 @@ query queryIssue {
 
 class LogoTitle extends React.Component {
     render() {
-      return (
-        <Image
-          style={{ width: 30, height: 30 }}
-        />
-      );
+        return (
+            <Image
+                style={{ width: 30, height: 30 }}
+            />
+        );
     }
-  }
+}
 
 export default class Search extends React.Component {
     static navigationOptions = {
         headerTitle: <LogoTitle />,
         headerRight: (
-          <Button
-            onPress={() => alert('This is a button!')}
-            title="Filters"
-            color="#fff"
-          />
+            <Button icon= {
+            <Icon
+                raised
+                name='list'
+                type='font-awesome'
+                color='#f50'
+                size={18}
+                onPress={() => console.log('hello')} />}/>
         ),
         headerLeft: (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Favorites"
-              color="#fff"
-            />
-          ),
-      };
-  render() {
-    return (
-      <View>
-          <Text>this is the search things</Text>
-      {/* <Query query={HelloWorld}>
+            <Button icon={
+            <Icon
+                raised
+                name='filter'
+                type='font-awesome'
+                color='#f50'
+                size={18}
+                onPress={() => console.log('hello')} />}/>
+        ),
+    };
+    render() {
+        return (
+            <View>
+                <Text>this is the search things</Text>
+                {/* <Query query={HelloWorld}>
       {({ loading, error, data }) => {
         if (loading) return <Text>Loading...</Text>;
         if (error) return  <Text> error </Text>; 
@@ -73,16 +81,16 @@ export default class Search extends React.Component {
         )}
       }}
     </Query> */}
-    </View>
-    );
-  }
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
