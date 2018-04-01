@@ -8,11 +8,6 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import Root from './Root';
 
-const CLIENT_ID = ''
-const CLIENT_SECRET = ''
-const GH_URL = 'https://github.com/login/oauth/authorize?'
-
-
 export default class App extends React.Component {
   state = {
     fontsAreLoaded: false,
