@@ -4,6 +4,7 @@ import React from 'react';
 import Search from './Search';
 import Labels from './Labels';
 import Login from './Login';
+import IssueList from './IssueList';
 
 const RootStack = StackNavigator(
     {
@@ -18,6 +19,9 @@ const RootStack = StackNavigator(
       },
       Labels: {
         screen: Labels,
+      },
+      IssueList: {
+        screen:IssueList
       }
     },
     {

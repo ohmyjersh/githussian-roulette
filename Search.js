@@ -44,28 +44,30 @@ class LogoTitle extends React.Component {
 }
 
 export default class Search extends React.Component {
-    static navigationOptions = {
+    static navigationOptions = ({ navigation, navigationOptions }) => {
+        const { params } = navigation.state;
+        return ({
+        title: params ? params.otherParam : 'Githussian Roulette',    
         headerTitle: <LogoTitle />,
         headerRight: (
-            <Button icon= {
             <Icon
                 raised
                 name='list'
                 type='font-awesome'
                 color='#f50'
                 size={18}
-                onPress={() => console.log('hello')} />}/>
+                onPress={() => navigation.navigate('IssueList')} />
         ),
         headerLeft: (
-            <Button icon={
             <Icon
                 raised
                 name='filter'
                 type='font-awesome'
                 color='#f50'
                 size={18}
-                onPress={() => console.log('hello')} />}/>
+                onPress={() => navigation.navigate('Labels')} />
         ),
+    })
     };
     render() {
         return (
